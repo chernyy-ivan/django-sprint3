@@ -4,13 +4,14 @@ from blog.models import Post, Category
 
 from django.utils import timezone
 
+from . import constants
+
 
 def index(request):
     template = 'blog/index.html'
     post_list = Post.objects.filter(
         pub_date__lte=timezone.now(),
-        is_published=True, category__is_published=True).order_by(
-            '-pub_date')[:5]
+        is_published=True, category__is_published=True)[:constants.POST_LIMIT]
     context = {
         'post_list': post_list
     }
