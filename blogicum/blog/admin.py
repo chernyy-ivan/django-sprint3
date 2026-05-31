@@ -13,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
         'location',
         'is_published',
     )
-    list_editable = ('is_published',)  # Исправили опечатку тут!
+    list_editable = ('is_published',)
 
     list_filter = ('is_published', 'category', 'location')
 
