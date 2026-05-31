@@ -3,22 +3,34 @@ from django.contrib import admin
 from .models import Category, Location, Post
 
 
-class BlogAdmin(admin.ModelAdmin):
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
     list_display = (
-        'title', 'author', 'category', 'is_published'
-    )
-
-    list_editabel = (
+        'title',
+        'pub_date',
+        'author',
+        'category',
+        'location',
         'is_published',
     )
+    list_editable = ('is_published',)
 
-    list_filter = (
-        'is_published', 'category'
-    )
+    list_filter = ('is_published', 'category', 'location')
+
+    search_fields = ('title', 'text', 'author__username')
+
+    date_hierarchy = 'pub_date'
 
 
-admin.site.register(Category)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'slug', 'is_published')
+    list_editable = ('is_published',)
+    search_fields = ('title', 'slug')
 
-admin.site.register(Location)
 
-admin.site.register(Post, BlogAdmin)
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'is_published')
+    list_editable = ('is_published',)
+    search_fields = ('name',)
